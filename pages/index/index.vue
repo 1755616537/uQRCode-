@@ -72,6 +72,9 @@
 					if (!option.size) {
 						option.size = 250
 					}
+					if(option.type==1){
+						option.text=decodeURIComponent(option.text)
+					}
 					uQRCode.make({
 						canvasId: 'qrcode',
 						componentInstance: this,
