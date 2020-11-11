@@ -75,13 +75,21 @@
 
 				// Promise
 				try {
+					// 默认大小
 					if (!option.size) {
 						option.size = 250
 					}
+					// 防止过大
+					if(option.size>2000){
+						option.size=2000
+					}
+					// 同步image宽高
 					this.qrcodeSize=option.size
+					// 是否需要转码
 					if(option.type==1){
 						option.text=decodeURIComponent(option.text)
 					}
+					// 生成二维码
 					uQRCode.make({
 						canvasId: 'qrcode',
 						componentInstance: this,
@@ -103,11 +111,11 @@
 					uni.hideLoading()
 				}
 			},
-			toComponent(type) {
-				uni.navigateTo({
-					url: '/pages/component/qrcode/qrcode?type=' + type
-				})
-			}
+			// toComponent(type) {
+			// 	uni.navigateTo({
+			// 		url: '/pages/component/qrcode/qrcode?type=' + type
+			// 	})
+			// }
 		}
 	}
 </script>
