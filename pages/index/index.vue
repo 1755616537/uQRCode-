@@ -1,12 +1,13 @@
 <template>
 	<view class="content">
-		<view class="text">二维码生成</view>
+		<!-- <view class="text">二维码生成</view> -->
 		<view class="canvas" v-show="canvas">
 			<canvas canvas-id="qrcode" :style="{width: `${qrcodeSize}px`, height: `${qrcodeSize}px`}" />
 			<!-- <text>canvas</text> -->
 		</view>
-		<view class="image">
-			<image :src="qrcodeSrc" />
+		<!-- <view class="image"> -->
+		<view style="display: flex;justify-content:center;">
+			<image :src="qrcodeSrc" :style="{width: qrcodeSize+'px',height:qrcodeSize+'px'}" />
 			<!-- <text>image</text> -->
 		</view>
 		<!-- <input class="input" v-model="qrcodeText" placeholder="输入内容生成二维码" />
@@ -47,6 +48,11 @@
 		methods: {
 			make(option) {
 				console.log(option)
+				
+				if(Object.keys(option).length<=0){
+					return
+				}
+				
 				uni.showLoading({
 					title: '二维码生成中',
 					mask: true
@@ -72,6 +78,7 @@
 					if (!option.size) {
 						option.size = 250
 					}
+					this.qrcodeSize=option.size
 					if(option.type==1){
 						option.text=decodeURIComponent(option.text)
 					}
