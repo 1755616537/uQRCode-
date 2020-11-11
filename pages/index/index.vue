@@ -37,22 +37,36 @@
 				qrcodeText: 'uQRCode 更新时间：2020-09-27',
 				qrcodeSize: uni.upx2px(590),
 				qrcodeSrc: '',
-				canvas:true
+				canvas: true
 			}
 		},
 		onLoad(option) {
 			// console.log('errorCorrectLevel', uQRCode.errorCorrectLevel)
 			// console.log('defaults', uQRCode.defaults)
+
+
+			// 如果网页路径存在?的参数就转换成路由的option
+			let url = window.location.search.substr(1);
+			console.log(url)
+			if (url) {
+				window.location.href = window.location.port
+				+':'
+				+window.location.pathname == '/' ? '' : window.location.pathname
+				+'#/?'
+				+url;
+				return;
+			}
+
 			this.make(option)
 		},
 		methods: {
 			make(option) {
 				console.log(option)
-				
-				if(Object.keys(option).length<=0){
+
+				if (Object.keys(option).length <= 0) {
 					return
 				}
-				
+
 				uni.showLoading({
 					title: '二维码生成中',
 					mask: true
@@ -80,14 +94,14 @@
 						option.size = 250
 					}
 					// 防止过大
-					if(option.size>2000){
-						option.size=2000
+					if (option.size > 2000) {
+						option.size = 2000
 					}
 					// 同步image宽高
-					this.qrcodeSize=option.size
+					this.qrcodeSize = option.size
 					// 是否需要转码
-					if(option.type==1){
-						option.text=decodeURIComponent(option.text)
+					if (option.type == 1) {
+						option.text = decodeURIComponent(option.text)
 					}
 					// 生成二维码
 					uQRCode.make({
@@ -103,7 +117,7 @@
 					}).then(res => {
 						console.log(res)
 						this.qrcodeSrc = res
-						this.canvas=false
+						this.canvas = false
 					}).finally(() => {
 						uni.hideLoading()
 					})
